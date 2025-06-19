@@ -1,3 +1,20 @@
+## [2.0.0](https://github.com/iomerkoyuncu/ui-challenge/compare/v1.1.0...v2.0.0) (2025-06-19)
+
+### ⚠ BREAKING CHANGES
+
+* modify releaserc.json
+* update releaserc.json
+* major update release test
+
+### Features
+
+* major update release test ([1637485](https://github.com/iomerkoyuncu/ui-challenge/commit/1637485eca9e2543dc51faa0792de75bcb1d431e))
+
+### Bug Fixes
+
+* modify releaserc.json ([3ec3cc6](https://github.com/iomerkoyuncu/ui-challenge/commit/3ec3cc611f97192c3a3e0e787916edf9e0d1c23d))
+* update releaserc.json ([de71ce3](https://github.com/iomerkoyuncu/ui-challenge/commit/de71ce3860f3f469fe70b822e3753de82493c9f3))
+
 # [1.1.0](https://github.com/iomerkoyuncu/ui-challenge/compare/v1.0.1...v1.1.0) (2025-06-19)
 
 
