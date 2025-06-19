@@ -1,3 +1,9 @@
+## [2.0.3](https://github.com/iomerkoyuncu/ui-challenge/compare/v2.0.2...v2.0.3) (2025-06-19)
+
+### Bug Fixes
+
+* test release added dockerfile ([3416f5c](https://github.com/iomerkoyuncu/ui-challenge/commit/3416f5c36908f7ccff043b8fc994a3a8e64f6846))
+
 ## [2.0.2](https://github.com/iomerkoyuncu/ui-challenge/compare/v2.0.1...v2.0.2) (2025-06-19)
 
 ### Bug Fixes
