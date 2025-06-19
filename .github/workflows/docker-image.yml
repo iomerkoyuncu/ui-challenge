@@ -1,35 +1,21 @@
 name: Docker Image CI
-
 on:
-  workflow_run:
-    workflows: ['Release'] # Make sure this matches your Release workflow name exactly
-    types:
-      - completed
+  push:
     branches:
       - master
+    tags:
+      - 'v*' # This will trigger when semantic-release creates tags
 
 jobs:
   build:
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
 
     steps:
       - uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.workflow_run.head_sha }} # Use the same commit as the Release workflow
 
       - name: Check if this is a release
         id: check_release
         run: |
-          echo "Workflow run event:"
-          echo "Conclusion: ${{ github.event.workflow_run.conclusion }}"
-          echo "Branch: ${{ github.event.workflow_run.head_branch }}"
-          echo "Workflow name: ${{ github.event.workflow_run.name }}"
-          echo "Commit SHA: ${{ github.event.workflow_run.head_sha }}"
-
           echo "Current commit: $(git rev-parse HEAD)"
           echo "Available tags:"
           git tag -l --sort=-version:refname | head -10
@@ -47,27 +33,36 @@ jobs:
           fi
 
       - name: Log in to GitHub Container Registry
-        if: steps.check_release.outputs.is_release == 'true'
         uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build and push Docker image
+      - name: Build and push Docker image (release)
         if: steps.check_release.outputs.is_release == 'true'
         run: |
           TAG=$(git describe --tags --exact-match HEAD)
-          IMAGE_NAME="ghcr.io/${{ github.repository_owner }}/yerlem-web"
+          echo "Building and pushing Docker image with tag: ${TAG}"
 
-          echo "Building Docker image with tag: ${TAG}"
-          docker build . --file Dockerfile --tag ${IMAGE_NAME}:${TAG}
-          docker build . --file Dockerfile --tag ${IMAGE_NAME}:latest
+          # GitHub Container Registry
+          docker build . --file Dockerfile --tag ghcr.io/${{ github.repository_owner }}/yerlem-web:${TAG}
+          docker build . --file Dockerfile --tag ghcr.io/${{ github.repository_owner }}/yerlem-web:latest
+          docker push ghcr.io/${{ github.repository_owner }}/yerlem-web:${TAG}
+          docker push ghcr.io/${{ github.repository_owner }}/yerlem-web:latest
 
-          echo "Pushing Docker images..."
-          docker push ${IMAGE_NAME}:${TAG}
-          docker push ${IMAGE_NAME}:latest
+          echo "Docker images pushed successfully to GHCR"
 
-          echo "✅ Docker images pushed successfully"
-          echo "📦 Image available at: ${IMAGE_NAME}:${TAG}"
-          echo "📦 Latest image at: ${IMAGE_NAME}:latest"
+      - name: Build and push Docker image (development)
+        if: steps.check_release.outputs.is_release == 'false'
+        run: |
+          LATEST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "dev")
+          echo "Building and pushing development image with tag: ${LATEST_TAG}"
+
+          # GitHub Container Registry
+          docker build . --file Dockerfile --tag ghcr.io/${{ github.repository_owner }}/yerlem-web:${LATEST_TAG}
+          docker build . --file Dockerfile --tag ghcr.io/${{ github.repository_owner }}/yerlem-web:dev
+          docker push ghcr.io/${{ github.repository_owner }}/yerlem-web:${LATEST_TAG}
+          docker push ghcr.io/${{ github.repository_owner }}/yerlem-web:dev
+
+          echo "Development Docker images pushed successfully to GHCR"
