@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/iomerkoyuncu/ui-challenge/compare/v1.0.1...v1.1.0) (2025-06-19)
+
+
+### Features
+
+* test release ([d915e50](https://github.com/iomerkoyuncu/ui-challenge/commit/d915e50b7a561f8ea40309ffaef1c5ddff9e75bc))
+
 ## [1.0.1](https://github.com/iomerkoyuncu/ui-challenge/compare/v1.0.0...v1.0.1) (2025-06-19)
 
 
