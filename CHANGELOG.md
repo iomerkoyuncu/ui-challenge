@@ -1,3 +1,12 @@
+## [1.0.1](https://github.com/iomerkoyuncu/ui-challenge/compare/v1.0.0...v1.0.1) (2025-06-19)
+
+
+### Bug Fixes
+
+* bring back package-lock.json ([9cc7181](https://github.com/iomerkoyuncu/ui-challenge/commit/9cc71816714415c71027e13ce2bf97d0644a67cf))
+* package-lock.json ([0879f4a](https://github.com/iomerkoyuncu/ui-challenge/commit/0879f4aa914c8cbb97361176e08db33c95f6fb92))
+* verify release works ([41ee73a](https://github.com/iomerkoyuncu/ui-challenge/commit/41ee73af79d0f25924e3387876433362ae2eec40))
+
 # 1.0.0 (2025-06-19)
 
 
